@@ -6,6 +6,12 @@ import graphqlHTTP from 'express-graphql';
 
 const app = express();
 
+
+mongoose.connect('mongodb://admin:admin@ds237967.mlab.com:37967/graphqlapi');
+const db = mongoose.connection;
+db.on('error', () => console.log('Failed to connect database'))
+	.once('open', () => console.log('Connected to DB'))
+
 app.get('/', (req, res) => {
 	res.send('Hello world, this is graphQL api');
 });
@@ -22,3 +28,6 @@ app.use('/graphql', graphqlHTTP(() => ({
 app.listen(3000, () =>{
 	console.log('Graphql API Runing on port 3000');
 });
+
+
+

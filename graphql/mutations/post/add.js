@@ -1,5 +1,5 @@
 import {
-	GraphQLNonNull
+	GraphQLNonNull,
 } from 'graphql';
 
 import { postType, postInputType } from '../../types/post';
@@ -13,13 +13,12 @@ export default {
 			type: new GraphQLNonNull(postInputType)
 		}
 	},
-	resolve(root, params){
+	resolve(root, params) {
 		const pModel = new PostModel(params.data);
-		const newUser = pModel.save();
-		if(!newUser) {
+		const newPost = pModel.save();
+		if (!newPost) {
 			throw new Error('Error adding post');
 		}
-		return newPost;
+		return newPost
 	}
-
 }

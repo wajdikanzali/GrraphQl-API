@@ -1,18 +1,16 @@
 import {
 	GraphQLNonNull,
 	GraphQLID
-} from 'graphql';
+} from 'graphql'
 
-
-import { userType, userInputType } from '../../types/user';
-import UserModel from '../../../models/user';
-
+import { userType, userInputType } from '../../types/user'
+import UserModel from '../../../models/user'
 
 export default {
 	type: userType,
 	args: {
 		id: {
-			name: id 'id',
+			name: 'ID',
 			type: new GraphQLNonNull(GraphQLID)
 		},
 		data: {
@@ -20,9 +18,12 @@ export default {
 			type: new GraphQLNonNull(userInputType)
 		}
 	},
-	resolve (root, params){
-		return UserModel.findByIdAndUpdate(params.id, { $set: { ...params.data }})
-			.then(data => userModel.findById(data.id).exec())
-			.catch(err => new Error('Couldn\'t update user data,', err));
+	resolve(root, params) {
+		return UserModel.findByIdAndUpdate(
+			params.id,
+			{ $set: { ...params.data } },
+			{ new: true }
+		)
+		.catch(err => new Error('Couldn\'t Update User data, ', err));
 	}
-};
+}

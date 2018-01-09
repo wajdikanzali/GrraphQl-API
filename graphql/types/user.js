@@ -3,7 +3,7 @@ import {
 	GraphQLInputObjectType,
 	GraphQLNonNull,
 	GraphQLString,
-	GraphQLInt,
+  GraphQLInt,
 	GraphQLID,
 	GraphQLList
 } from 'graphql';
@@ -11,9 +11,8 @@ import {
 import PostModel from '../../models/post';
 import { postType } from './post';
 
-export const userType = new GraphQLInputObjectType({
+export const userType = new GraphQLObjectType({
 	name: 'User',
-	description: 'User api',
 	fields: () => ({
 		_id: {
 			type: new GraphQLNonNull(GraphQLID)
@@ -21,22 +20,22 @@ export const userType = new GraphQLInputObjectType({
 		email: {
 			type: GraphQLString
 		},
-		name: {
-			type: GraphQLString
-		},
-		posts: {
-			type: new GraphQLList(postType)
+    name: {
+      type: GraphQLString
+    },
+    posts: {
+			type: new GraphQLList(postType),
 			resolve(user) {
-				const {_id } = user;
+				const { _id } = user
 				return PostModel.find({ uid: _id }).exec()
 			}
-		}
+		},
 	})
-});
+})
 
-export const userInputType: new GraphQLInputObjectType({
-	name: 'userInput',
-	description: 'Insert User'
+
+export const userInputType = new GraphQLInputObjectType({
+	name: 'UserInput',
 	fields: () => ({
 		email: {
 			type: GraphQLString

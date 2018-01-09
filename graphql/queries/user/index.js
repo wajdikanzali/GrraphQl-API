@@ -1,7 +1,7 @@
-import user from './single';
+import User from './single';
 import Users from './multiple';
 
 export default {
-	User,
-	Users,
+  User,
+  Users
 }

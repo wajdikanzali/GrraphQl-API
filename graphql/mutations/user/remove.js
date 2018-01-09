@@ -1,26 +1,24 @@
 import {
 	GraphQLNonNull,
 	GraphQLID
-} from 'graphql';
+} from 'graphql'
 
-
-import { userType, userInputType } from '../../types/user';
-import UserModel from '../../../models/user';
-
+import { postType } from '../../types/post'
+import UserModel from '../../../models/post'
 
 export default {
-	type: userType,
+	type: postType,
 	args: {
 		id: {
-			name: id 'id',
+			name: 'id',
 			type: new GraphQLNonNull(GraphQLID)
 		}
 	},
-	resolve (root, params){
-		const removedUser = UserModel.findByIdAndRemove(params.id).exec();
-		if(!removedUser) {
-			throw new Error('Error removing user');
+	resolve(root, params) {
+		const removeduser = UserModel.findByIdAndRemove(params.id).exec();
+		if (!removeduser) {
+			throw new Error('Error removing user')
 		}
-		return removedUser;
+		return removeduser;
 	}
-};
+}
